@@ -66,13 +66,13 @@ run_tests() {
     log_message "INFO" "Running Newman tests for $env environment..."
     newman run "$COLLECTION_FILE" \
         -e "$env_file" \
-        -r htmlextra \
+        -r cli,htmlextra \
         --reporter-htmlextra-export "$report_file" \
         --reporter-htmlextra-title "Coffee API Tests - $env Environment" \
         --reporter-htmlextra-darkTheme \
         --reporter-htmlextra-showMarkdownLinks \
         --reporter-htmlextra-timezone "UTC" \
-        --reporter-htmlextra-export "$report_file"
+        --verbose
     
     # Check if tests were successful
     if [ $? -eq 0 ]; then

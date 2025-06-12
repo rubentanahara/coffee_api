@@ -13,7 +13,6 @@ jobs:
     strategy:
       matrix:
         environment: [dev, qa]
-        node-version: [18.x]
       fail-fast: false
 
     steps:
@@ -22,7 +21,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '18.x'
         cache: 'npm'
 
     - name: Install Newman and HTML reporter
@@ -30,35 +29,43 @@ jobs:
         npm install -g newman
         npm install -g newman-reporter-htmlextra
 
-    - name: Start API Server
-      run: |
-        # Add your API server startup command here
-        # For example: npm start &
-        sleep 10  # Give the server time to start
-      env:
-        PORT: ${{ matrix.environment == 'dev' && '8000' || '8001' }}
+    - name: Install dependencies
+      run: npm install
 
-    - name: Run API Tests
+    - name: Start API server
       run: |
-        mkdir -p reports
+        docker-compose -f docker-compose.${matrix.environment}.yml up -d
+        echo "Waiting for server to start..."
+        sleep 15  # Give the server time to start
+        docker-compose -f docker-compose.${matrix.environment}.yml ps
+
+    - name: Create reports directory
+      run: mkdir -p reports
+
+    - name: Run API tests
+      run: |
         newman run coffee_api.postman_collection.json \
-          -e coffee_api_${{ matrix.environment }}.postman_environment.json \
+          -e coffee_api_${matrix.environment}.postman_environment.json \
           -r htmlextra \
-          --reporter-htmlextra-export reports/${{ matrix.environment }}_report.html \
-          --reporter-htmlextra-title "Coffee API Tests - ${{ matrix.environment }} Environment" \
+          --reporter-htmlextra-export reports/${matrix.environment}_report.html \
+          --reporter-htmlextra-title "Coffee API Tests - ${matrix.environment} Environment" \
           --reporter-htmlextra-darkTheme \
           --reporter-htmlextra-showMarkdownLinks \
           --reporter-htmlextra-timezone "UTC"
 
-    - name: Upload Test Reports
+    - name: Upload test reports
       uses: actions/upload-artifact@v4
       with:
         name: test-reports-${{ matrix.environment }}
         path: reports/
         retention-days: 7
 
-    - name: Check Test Results
+    - name: Stop API server
+      if: always()
+      run: docker-compose -f docker-compose.${matrix.environment}.yml down
+
+    - name: Check test results
       if: failure()
       run: |
-        echo "Tests failed for ${{ matrix.environment }} environment"
+        echo "Tests failed for environment: ${{ matrix.environment }}"
         exit 1 

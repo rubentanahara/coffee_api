@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  api_qa:
+    build:
+      context: .
+      dockerfile: Dockerfile.qa
+    ports:
+      - "8001:8000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=qa
+      - PORT=8000
+      - MONGODB_URI=mongodb://mongodb_qa:27017/coffee_db_qa
+    depends_on:
+      - mongodb_qa
+
+  mongodb_qa:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_qa_data:/data/db
+    command: mongod --dbpath /data/db
+
+volumes:
+  mongodb_qa_data: 

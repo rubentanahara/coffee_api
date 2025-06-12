@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  api_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=8000
+      - MONGODB_URI=mongodb://mongodb_dev:27017/coffee_db_dev
+    depends_on:
+      - mongodb_dev
+
+  mongodb_dev:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_dev_data:/data/db
+    command: mongod --dbpath /data/db
+
+volumes:
+  mongodb_dev_data: 

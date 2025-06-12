@@ -50,10 +50,10 @@ jobs:
     - name: Run Newman Tests
       run: |
         newman run coffee_api.postman_collection.json \
-          -e coffee_api_dev.postman_environment.json \
+          -e coffee_api_${{ matrix.environment }}.postman_environment.json \
           -r cli,htmlextra \
-          --reporter-htmlextra-export reports/dev_report.html \
-          --reporter-htmlextra-title "Coffee API Tests - Dev Environment" \
+          --reporter-htmlextra-export reports/${{ matrix.environment }}_report.html \
+          --reporter-htmlextra-title "Coffee API Tests - ${{ matrix.environment }} Environment" \
           --reporter-htmlextra-darkTheme \
           --reporter-htmlextra-showMarkdownLinks \
           --reporter-htmlextra-timezone "UTC" \

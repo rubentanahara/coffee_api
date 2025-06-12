@@ -34,10 +34,10 @@ jobs:
 
     - name: Start API server
       run: |
-        docker-compose -f docker-compose.${matrix.environment}.yml up -d
+        docker-compose -f docker-compose.${{ matrix.environment }}.yml up -d
         echo "Waiting for server to start..."
         sleep 15  # Give the server time to start
-        docker-compose -f docker-compose.${matrix.environment}.yml ps
+        docker-compose -f docker-compose.${{ matrix.environment }}.yml ps
 
     - name: Create reports directory
       run: mkdir -p reports
@@ -45,10 +45,10 @@ jobs:
     - name: Run API tests
       run: |
         newman run coffee_api.postman_collection.json \
-          -e coffee_api_${matrix.environment}.postman_environment.json \
+          -e coffee_api_${{ matrix.environment }}.postman_environment.json \
           -r htmlextra \
-          --reporter-htmlextra-export reports/${matrix.environment}_report.html \
-          --reporter-htmlextra-title "Coffee API Tests - ${matrix.environment} Environment" \
+          --reporter-htmlextra-export reports/${{ matrix.environment }}_report.html \
+          --reporter-htmlextra-title "Coffee API Tests - ${{ matrix.environment }} Environment" \
           --reporter-htmlextra-darkTheme \
           --reporter-htmlextra-showMarkdownLinks \
           --reporter-htmlextra-timezone "UTC"
@@ -62,7 +62,7 @@ jobs:
 
     - name: Stop API server
       if: always()
-      run: docker-compose -f docker-compose.${matrix.environment}.yml down
+      run: docker-compose -f docker-compose.${{ matrix.environment }}.yml down
 
     - name: Check test results
       if: failure()

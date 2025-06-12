@@ -7,6 +7,150 @@
 	},
 	"item": [
 		{
+			"name": "Create Coffee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response has required fields\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('_id');",
+							"    pm.expect(jsonData).to.have.property('name');",
+							"    pm.expect(jsonData.name).to.eql('Test Coffee');",
+							"});",
+							"",
+							"// Store the created coffee ID for later use",
+							"if (pm.response.code === 201) {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set('coffeeId', jsonData._id);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Test Coffee\",\n    \"description\": \"A test coffee\",\n    \"price\": 9.99,\n    \"origin\": \"Test Origin\",\n    \"roastLevel\": \"medium\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/coffees",
+					"host": ["{{baseUrl}}"],
+					"path": ["coffees"]
+				}
+			}
+		},
+		{
+			"name": "Get Coffee by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has required fields\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('_id');",
+							"    pm.expect(jsonData).to.have.property('name');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/coffees/{{coffeeId}}",
+					"host": ["{{baseUrl}}"],
+					"path": ["coffees", "{{coffeeId}}"]
+				}
+			}
+		},
+		{
+			"name": "Update Coffee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has updated fields\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('name');",
+							"    pm.expect(jsonData.name).to.eql('Updated Coffee');",
+							"    pm.expect(jsonData.price).to.eql(12.99);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Updated Coffee\",\n    \"price\": 12.99\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/coffees/{{coffeeId}}",
+					"host": ["{{baseUrl}}"],
+					"path": ["coffees", "{{coffeeId}}"]
+				}
+			}
+		},
+		{
+			"name": "Delete Coffee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/coffees/{{coffeeId}}",
+					"host": ["{{baseUrl}}"],
+					"path": ["coffees", "{{coffeeId}}"]
+				}
+			}
+		},
+		{
 			"name": "Get All Coffees",
 			"request": {
 				"method": "GET",
@@ -43,246 +187,6 @@
 						"pm.test(\"Response is an array\", function () {",
 						"    var jsonData = pm.response.json();",
 						"    pm.expect(Array.isArray(jsonData)).to.be.true;",
-						"});"
-					]
-				}
-			]
-		},
-		{
-			"name": "Get Coffee by ID",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/coffees/:id",
-					"host": ["{{baseUrl}}"],
-					"path": ["coffees", ":id"],
-					"variable": [
-						{
-							"key": "id",
-							"value": "coffee_id_here"
-						}
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Success Response",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/coffees/:id",
-							"host": ["{{baseUrl}}"],
-							"path": ["coffees", ":id"],
-							"variable": [
-								{
-									"key": "id",
-									"value": "coffee_id_here"
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [],
-					"cookie": [],
-					"body": "{}",
-					"test": [
-						"pm.test(\"Status code is 200\", function () {",
-						"    pm.response.to.have.status(200);",
-						"});",
-						"",
-						"pm.test(\"Response has required fields\", function () {",
-						"    var jsonData = pm.response.json();",
-						"    pm.expect(jsonData).to.have.property('_id');",
-						"    pm.expect(jsonData).to.have.property('name');",
-						"});"
-					]
-				}
-			]
-		},
-		{
-			"name": "Create Coffee",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"Test Coffee\",\n    \"description\": \"A test coffee\",\n    \"price\": 9.99,\n    \"origin\": \"Test Origin\"\n}"
-				},
-				"url": {
-					"raw": "{{baseUrl}}/coffees",
-					"host": ["{{baseUrl}}"],
-					"path": ["coffees"]
-				}
-			},
-			"response": [
-				{
-					"name": "Success Response",
-					"originalRequest": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Test Coffee\",\n    \"description\": \"A test coffee\",\n    \"price\": 9.99,\n    \"origin\": \"Test Origin\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/coffees",
-							"host": ["{{baseUrl}}"],
-							"path": ["coffees"]
-						}
-					},
-					"status": "Created",
-					"code": 201,
-					"_postman_previewlanguage": "json",
-					"header": [],
-					"cookie": [],
-					"body": "{}",
-					"test": [
-						"pm.test(\"Status code is 201\", function () {",
-						"    pm.response.to.have.status(201);",
-						"});",
-						"",
-						"pm.test(\"Response has required fields\", function () {",
-						"    var jsonData = pm.response.json();",
-						"    pm.expect(jsonData).to.have.property('_id');",
-						"    pm.expect(jsonData).to.have.property('name');",
-						"    pm.expect(jsonData.name).to.eql('Test Coffee');",
-						"});"
-					]
-				}
-			]
-		},
-		{
-			"name": "Update Coffee",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"Updated Coffee\",\n    \"price\": 12.99\n}"
-				},
-				"url": {
-					"raw": "{{baseUrl}}/coffees/:id",
-					"host": ["{{baseUrl}}"],
-					"path": ["coffees", ":id"],
-					"variable": [
-						{
-							"key": "id",
-							"value": "coffee_id_here"
-						}
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Success Response",
-					"originalRequest": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Updated Coffee\",\n    \"price\": 12.99\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/coffees/:id",
-							"host": ["{{baseUrl}}"],
-							"path": ["coffees", ":id"],
-							"variable": [
-								{
-									"key": "id",
-									"value": "coffee_id_here"
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [],
-					"cookie": [],
-					"body": "{}",
-					"test": [
-						"pm.test(\"Status code is 200\", function () {",
-						"    pm.response.to.have.status(200);",
-						"});",
-						"",
-						"pm.test(\"Response has updated fields\", function () {",
-						"    var jsonData = pm.response.json();",
-						"    pm.expect(jsonData).to.have.property('name');",
-						"    pm.expect(jsonData.name).to.eql('Updated Coffee');",
-						"    pm.expect(jsonData.price).to.eql(12.99);",
-						"});"
-					]
-				}
-			]
-		},
-		{
-			"name": "Delete Coffee",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/coffees/:id",
-					"host": ["{{baseUrl}}"],
-					"path": ["coffees", ":id"],
-					"variable": [
-						{
-							"key": "id",
-							"value": "coffee_id_here"
-						}
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Success Response",
-					"originalRequest": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/coffees/:id",
-							"host": ["{{baseUrl}}"],
-							"path": ["coffees", ":id"],
-							"variable": [
-								{
-									"key": "id",
-									"value": "coffee_id_here"
-								}
-							]
-						}
-					},
-					"status": "No Content",
-					"code": 204,
-					"_postman_previewlanguage": "json",
-					"header": [],
-					"cookie": [],
-					"body": "",
-					"test": [
-						"pm.test(\"Status code is 204\", function () {",
-						"    pm.response.to.have.status(204);",
 						"});"
 					]
 				}

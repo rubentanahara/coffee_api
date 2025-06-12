@@ -29,4 +29,9 @@ logs/
 *.log
 
 # Reports
-reports/ 
+reports/
+*.html
+
+# System files
+.DS_Store
+Thumbs.db 

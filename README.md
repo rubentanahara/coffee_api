@@ -10,12 +10,17 @@ A RESTful API service for managing coffee types, built with Express.js, TypeScri
 - Docker support for multiple environments
 - Health check endpoint
 - Development and QA environments
+- CORS support
+- Environment configuration with dotenv
+- ESLint for code quality
+- Jest for testing
 
 ## Prerequisites
 
 - Node.js (v20 or later)
 - MongoDB
 - Docker and Docker Compose (for containerized development)
+- npm or yarn package manager
 
 ## Project Structure
 
@@ -26,11 +31,31 @@ coffee_api/
 │   ├── models/        # Database models
 │   ├── routes/        # API routes
 │   ├── config/        # Configuration files
+│   ├── middleware/    # Custom middleware
 │   └── index.ts       # Application entry point
 ├── scripts/           # Utility scripts
 ├── docker/           # Docker configuration
-└── tests/            # Test suite
+├── tests/            # Test suite
+├── reports/          # Test and coverage reports
+└── .github/          # GitHub workflows and templates
 ```
+
+## Dependencies
+
+### Production Dependencies
+- express: ^4.18.3
+- mongoose: ^8.2.1
+- cors: ^2.8.5
+- dotenv: ^16.4.5
+
+### Development Dependencies
+- typescript: ^5.3.3
+- ts-node-dev: ^2.0.0
+- @types/express: ^4.17.21
+- @types/node: ^20.11.24
+- @types/cors: ^2.8.17
+- @typescript-eslint/eslint-plugin: ^7.1.1
+- @typescript-eslint/parser: ^7.1.1
 
 ## Getting Started
 
@@ -144,6 +169,34 @@ db.coffees.find({ name: "Ethiopian Yirgacheffe" })
 // Find by price range
 db.coffees.find({ price: { $gt: 10, $lt: 15 } })
 ```
+
+## Testing
+
+The project uses Jest for testing. You can run tests using:
+
+```bash
+npm test
+```
+
+For Windows users, there's a PowerShell script available:
+```bash
+./run-tests.ps1
+```
+
+## API Documentation
+
+Postman collections and environments are provided for testing:
+- `coffee_api.postman_collection.json` - API endpoints collection
+- `coffee_api_dev.postman_environment.json` - Development environment
+- `coffee_api_qa.postman_environment.json` - QA environment
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 

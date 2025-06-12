@@ -1,99 +1,13 @@
 {
 	"info": {
-		"_postman_id": "coffee-api-collection",
+		"_postman_id": "1fb69a8a-78de-4375-a34c-f989f0d66ae6",
 		"name": "Coffee API",
 		"description": "Collection for Coffee API endpoints with comprehensive testing and automation",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19876131",
+		"_collection_link": "https://speeding-station-709319.postman.co/workspace/8df717c5-7b0d-477e-8dd7-3571e7d67e6f/collection/19876131-1fb69a8a-78de-4375-a34c-f989f0d66ae6?action=share&source=collection_link&creator=19876131"
 	},
-	"variable": [
-		{
-			"key": "baseUrl",
-			"value": "http://localhost:8000",
-			"type": "string"
-		},
-		{
-			"key": "apiVersion",
-			"value": "v1",
-			"type": "string"
-		},
-		{
-			"key": "defaultCoffeeName",
-			"value": "Test Coffee",
-			"type": "string"
-		},
-		{
-			"key": "defaultCoffeePrice",
-			"value": "9.99",
-			"type": "string"
-		},
-		{
-			"key": "defaultCoffeeOrigin",
-			"value": "Test Origin",
-			"type": "string"
-		},
-		{
-			"key": "defaultRoastLevel",
-			"value": "medium",
-			"type": "string"
-		}
-	],
 	"item": [
-		{
-			"name": "Health Check",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/api/{{apiVersion}}/health",
-					"host": ["{{baseUrl}}"],
-					"path": ["api", "{{apiVersion}}", "health"]
-				},
-				"description": "Check the health status of the API"
-			},
-			"response": [
-				{
-					"name": "Success Response",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/{{apiVersion}}/health",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "{{apiVersion}}", "health"]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [],
-					"cookie": [],
-					"body": "{\n  \"status\": \"ok\",\n  \"timestamp\": \"2023-01-01T00:00:00.000Z\",\n  \"service\": \"coffee-api\",\n  \"version\": \"1.0.0\"\n}",
-					"test": [
-						"pm.test(\"Status code is 200\", function () {",
-						"    pm.response.to.have.status(200);",
-						"});",
-						"",
-						"pm.test(\"Response has required fields\", function () {",
-						"    var jsonData = pm.response.json();",
-						"    pm.expect(jsonData).to.have.property('status');",
-						"    pm.expect(jsonData).to.have.property('timestamp');",
-						"    pm.expect(jsonData).to.have.property('service');",
-						"    pm.expect(jsonData).to.have.property('version');",
-						"});",
-						"",
-						"pm.test(\"Service name is correct\", function () {",
-						"    var jsonData = pm.response.json();",
-						"    pm.expect(jsonData.service).to.equal('coffee-api');",
-						"});",
-						"",
-						"pm.test(\"Timestamp is valid ISO date\", function () {",
-						"    var jsonData = pm.response.json();",
-						"    pm.expect(new Date(jsonData.timestamp).toISOString()).to.equal(jsonData.timestamp);",
-						"});"
-					]
-				}
-			]
-		},
 		{
 			"name": "Coffee Management",
 			"item": [
@@ -169,11 +83,93 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/{{apiVersion}}/coffees",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "{{apiVersion}}", "coffees"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"{{apiVersion}}",
+								"coffees"
+							]
 						},
 						"description": "Create a new coffee entry"
-					}
+					},
+					"response": [
+						{
+							"name": "Create Coffee",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{uniqueCoffeeName}}\",\n    \"description\": \"A test coffee\",\n    \"price\": 9.99,\n    \"origin\": \"Test Origin\",\n    \"roastLevel\": \"medium\"\n}"
+								},
+								"url": {
+									"raw": "https://77caf86e-b950-46ef-a556-a02d041e1b38.mock.pstmn.io/api/v1/coffees",
+									"protocol": "https",
+									"host": [
+										"77caf86e-b950-46ef-a556-a02d041e1b38",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"api",
+										"v1",
+										"coffees"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "262"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"106-YO+Gb2hs7pxqU9maIKwwo/jWM3g\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Jun 2025 06:51:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"name\": \"Test Coffee_1749711076650\",\n    \"description\": \"A test coffee\",\n    \"origin\": \"Test Origin\",\n    \"roastLevel\": \"medium\",\n    \"price\": 9.99,\n    \"isAvailable\": true,\n    \"_id\": \"684a78e43378ce773edb6b78\",\n    \"createdAt\": \"2025-06-12T06:51:16.661Z\",\n    \"updatedAt\": \"2025-06-12T06:51:16.661Z\",\n    \"__v\": 0\n}"
+						}
+					]
 				},
 				{
 					"name": "Get Coffee by ID",
@@ -207,11 +203,86 @@
 						"header": [],
 						"url": {
 							"raw": "{{baseUrl}}/api/{{apiVersion}}/coffees/{{coffeeId}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "{{apiVersion}}", "coffees", "{{coffeeId}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"{{apiVersion}}",
+								"coffees",
+								"{{coffeeId}}"
+							]
 						},
 						"description": "Retrieve a specific coffee by its ID"
-					}
+					},
+					"response": [
+						{
+							"name": "Get Coffee by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://77caf86e-b950-46ef-a556-a02d041e1b38.mock.pstmn.io/api/v1/coffees/{{coffeeId}}",
+									"protocol": "https",
+									"host": [
+										"77caf86e-b950-46ef-a556-a02d041e1b38",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"api",
+										"v1",
+										"coffees",
+										"{{coffeeId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "262"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"106-cEkWUICG+4OcD2QwhXH0c5rJx9s\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Jun 2025 06:51:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"_id\": \"684a78e43378ce773edb6b78\",\n    \"name\": \"Test Coffee_1749711076650\",\n    \"description\": \"A test coffee\",\n    \"origin\": \"Test Origin\",\n    \"roastLevel\": \"medium\",\n    \"price\": 9.99,\n    \"isAvailable\": true,\n    \"createdAt\": \"2025-06-12T06:51:16.661Z\",\n    \"updatedAt\": \"2025-06-12T06:51:16.661Z\",\n    \"__v\": 0\n}"
+						}
+					]
 				},
 				{
 					"name": "Update Coffee",
@@ -219,18 +290,18 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"// Generate a unique name for the update",
 									"const timestamp = new Date().getTime();",
 									"pm.variables.set('updatedCoffeeName', `Updated_Coffee_${timestamp}`);"
-								]
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -265,8 +336,11 @@
 									"// Store the updated name for later use",
 									"if (pm.response.code === 200) {",
 									"    pm.environment.set('updatedCoffeeName', pm.variables.get('updatedCoffeeName'));",
-									"}"
-								]
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -284,11 +358,95 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/{{apiVersion}}/coffees/{{coffeeId}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "{{apiVersion}}", "coffees", "{{coffeeId}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"{{apiVersion}}",
+								"coffees",
+								"{{coffeeId}}"
+							]
 						},
 						"description": "Update an existing coffee entry"
-					}
+					},
+					"response": [
+						{
+							"name": "Update Coffee",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\",\n    \"price\": 12.99\n}"
+								},
+								"url": {
+									"raw": "https://77caf86e-b950-46ef-a556-a02d041e1b38.mock.pstmn.io/api/v1/coffees/{{coffeeId}}1",
+									"protocol": "https",
+									"host": [
+										"77caf86e-b950-46ef-a556-a02d041e1b38",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"api",
+										"v1",
+										"coffees",
+										"{{coffeeId}}1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "266"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10a-fj4BTzx/udbSgf9SDdvJIOeRq1Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Jun 2025 06:52:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"_id\": \"684a78e43378ce773edb6b78\",\n    \"name\": \"Updated_Coffee_1749711124629\",\n    \"description\": \"A test coffee\",\n    \"origin\": \"Test Origin\",\n    \"roastLevel\": \"medium\",\n    \"price\": 12.99,\n    \"isAvailable\": true,\n    \"createdAt\": \"2025-06-12T06:51:16.661Z\",\n    \"updatedAt\": \"2025-06-12T06:52:04.643Z\",\n    \"__v\": 0\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete Coffee",
@@ -319,11 +477,74 @@
 						"header": [],
 						"url": {
 							"raw": "{{baseUrl}}/api/{{apiVersion}}/coffees/{{coffeeId}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "{{apiVersion}}", "coffees", "{{coffeeId}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"{{apiVersion}}",
+								"coffees",
+								"{{coffeeId}}"
+							]
 						},
 						"description": "Delete a coffee entry"
-					}
+					},
+					"response": [
+						{
+							"name": "Delete Coffee",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://77caf86e-b950-46ef-a556-a02d041e1b38.mock.pstmn.io/api/v1/coffees/{{coffeeId}}",
+									"protocol": "https",
+									"host": [
+										"77caf86e-b950-46ef-a556-a02d041e1b38",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"api",
+										"v1",
+										"coffees",
+										"{{coffeeId}}"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Jun 2025 06:52:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": ""
+						}
+					]
 				},
 				{
 					"name": "Get All Coffees",
@@ -373,11 +594,84 @@
 						"header": [],
 						"url": {
 							"raw": "{{baseUrl}}/api/{{apiVersion}}/coffees",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "{{apiVersion}}", "coffees"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"{{apiVersion}}",
+								"coffees"
+							]
 						},
 						"description": "Retrieve all coffee entries"
-					}
+					},
+					"response": [
+						{
+							"name": "Get All Coffees",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://77caf86e-b950-46ef-a556-a02d041e1b38.mock.pstmn.io/api/v1/coffees",
+									"protocol": "https",
+									"host": [
+										"77caf86e-b950-46ef-a556-a02d041e1b38",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"api",
+										"v1",
+										"coffees"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2109"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"83d-YdlU/2AzHTxMUIVG0SkQthOXWWc\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Jun 2025 06:52:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "[\n    {\n        \"_id\": \"684a674c897188f9acc7ab31\",\n        \"name\": \"Test Coffee_1749706572422\",\n        \"description\": \"A test coffee\",\n        \"origin\": \"Test Origin\",\n        \"roastLevel\": \"medium\",\n        \"price\": 9.99,\n        \"isAvailable\": true,\n        \"createdAt\": \"2025-06-12T05:36:12.445Z\",\n        \"updatedAt\": \"2025-06-12T05:36:12.445Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"684a7216897188f9acc7ab3b\",\n        \"name\": \"Updated_Coffee_1749709366623\",\n        \"description\": \"A test coffee\",\n        \"origin\": \"Test Origin\",\n        \"roastLevel\": \"medium\",\n        \"price\": 12.99,\n        \"isAvailable\": true,\n        \"createdAt\": \"2025-06-12T06:22:14.098Z\",\n        \"updatedAt\": \"2025-06-12T06:22:46.623Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"684a74be897188f9acc7ab47\",\n        \"name\": \"Test Coffee_1749710014642\",\n        \"description\": \"A test coffee\",\n        \"origin\": \"Test Origin\",\n        \"roastLevel\": \"medium\",\n        \"price\": 9.99,\n        \"isAvailable\": true,\n        \"createdAt\": \"2025-06-12T06:33:34.662Z\",\n        \"updatedAt\": \"2025-06-12T06:33:34.662Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"684a77963378ce773edb6b65\",\n        \"name\": \"Test Coffee_1749710742912\",\n        \"description\": \"A test coffee\",\n        \"origin\": \"Test Origin\",\n        \"roastLevel\": \"medium\",\n        \"price\": 9.99,\n        \"isAvailable\": true,\n        \"createdAt\": \"2025-06-12T06:45:42.933Z\",\n        \"updatedAt\": \"2025-06-12T06:45:42.933Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"684a77e13378ce773edb6b67\",\n        \"name\": \"Test Coffee_1749710817088\",\n        \"description\": \"A test coffee\",\n        \"origin\": \"Test Origin\",\n        \"roastLevel\": \"medium\",\n        \"price\": 9.99,\n        \"isAvailable\": true,\n        \"createdAt\": \"2025-06-12T06:46:57.097Z\",\n        \"updatedAt\": \"2025-06-12T06:46:57.097Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"684a77e23378ce773edb6b69\",\n        \"name\": \"Test Coffee_1749710818409\",\n        \"description\": \"A test coffee\",\n        \"origin\": \"Test Origin\",\n        \"roastLevel\": \"medium\",\n        \"price\": 9.99,\n        \"isAvailable\": true,\n        \"createdAt\": \"2025-06-12T06:46:58.417Z\",\n        \"updatedAt\": \"2025-06-12T06:46:58.417Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"684a77e33378ce773edb6b6b\",\n        \"name\": \"Test Coffee_1749710819340\",\n        \"description\": \"A test coffee\",\n        \"origin\": \"Test Origin\",\n        \"roastLevel\": \"medium\",\n        \"price\": 9.99,\n        \"isAvailable\": true,\n        \"createdAt\": \"2025-06-12T06:46:59.350Z\",\n        \"updatedAt\": \"2025-06-12T06:46:59.350Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"684a77fb3378ce773edb6b6d\",\n        \"name\": \"Test Coffee_1749710843935\",\n        \"description\": \"A test coffee\",\n        \"origin\": \"Test Origin\",\n        \"roastLevel\": \"medium\",\n        \"price\": 9.99,\n        \"isAvailable\": true,\n        \"createdAt\": \"2025-06-12T06:47:23.946Z\",\n        \"updatedAt\": \"2025-06-12T06:47:23.946Z\",\n        \"__v\": 0\n    }\n]"
+						}
+					]
 				}
 			]
 		},
@@ -425,11 +719,93 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/{{apiVersion}}/coffees",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "{{apiVersion}}", "coffees"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"{{apiVersion}}",
+								"coffees"
+							]
 						},
 						"description": "Test validation error handling when creating coffee with invalid data"
-					}
+					},
+					"response": [
+						{
+							"name": "Create Coffee - Invalid Data",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\",\n    \"price\": -1\n}"
+								},
+								"url": {
+									"raw": "https://77caf86e-b950-46ef-a556-a02d041e1b38.mock.pstmn.io/api/v1/coffees",
+									"protocol": "https",
+									"host": [
+										"77caf86e-b950-46ef-a556-a02d041e1b38",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"api",
+										"v1",
+										"coffees"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1173"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"495-YBb92SKarJCPsRPteMO8hHngdUg\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Jun 2025 06:56:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"message\": \"Error creating coffee\",\n    \"error\": {\n        \"errors\": {\n            \"roastLevel\": {\n                \"name\": \"ValidatorError\",\n                \"message\": \"Path `roastLevel` is required.\",\n                \"properties\": {\n                    \"message\": \"Path `roastLevel` is required.\",\n                    \"type\": \"required\",\n                    \"path\": \"roastLevel\"\n                },\n                \"kind\": \"required\",\n                \"path\": \"roastLevel\"\n            },\n            \"origin\": {\n                \"name\": \"ValidatorError\",\n                \"message\": \"Path `origin` is required.\",\n                \"properties\": {\n                    \"message\": \"Path `origin` is required.\",\n                    \"type\": \"required\",\n                    \"path\": \"origin\"\n                },\n                \"kind\": \"required\",\n                \"path\": \"origin\"\n            },\n            \"description\": {\n                \"name\": \"ValidatorError\",\n                \"message\": \"Path `description` is required.\",\n                \"properties\": {\n                    \"message\": \"Path `description` is required.\",\n                    \"type\": \"required\",\n                    \"path\": \"description\"\n                },\n                \"kind\": \"required\",\n                \"path\": \"description\"\n            },\n            \"name\": {\n                \"name\": \"ValidatorError\",\n                \"message\": \"Path `name` is required.\",\n                \"properties\": {\n                    \"message\": \"Path `name` is required.\",\n                    \"type\": \"required\",\n                    \"path\": \"name\",\n                    \"fullPath\": \"name\",\n                    \"value\": \"\"\n                },\n                \"kind\": \"required\",\n                \"path\": \"name\",\n                \"value\": \"\"\n            }\n        },\n        \"_message\": \"Coffee validation failed\",\n        \"name\": \"ValidationError\",\n        \"message\": \"Coffee validation failed: roastLevel: Path `roastLevel` is required., origin: Path `origin` is required., description: Path `description` is required., name: Path `name` is required.\"\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "Get Coffee by ID - Not Found",
@@ -457,11 +833,190 @@
 						"header": [],
 						"url": {
 							"raw": "{{baseUrl}}/api/{{apiVersion}}/coffees/invalid-id",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "{{apiVersion}}", "coffees", "invalid-id"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"{{apiVersion}}",
+								"coffees",
+								"invalid-id"
+							]
 						},
 						"description": "Test error handling when requesting a non-existent coffee"
-					}
+					},
+					"response": [
+						{
+							"name": "Get Coffee by ID - Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://77caf86e-b950-46ef-a556-a02d041e1b38.mock.pstmn.io/api/v1/coffees/invalid-id",
+									"protocol": "https",
+									"host": [
+										"77caf86e-b950-46ef-a556-a02d041e1b38",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"api",
+										"v1",
+										"coffees",
+										"invalid-id"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "292"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"124-sloXBXiZ5TbXXyF+ETJ5Skt2+jM\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 12 Jun 2025 06:57:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"message\": \"Error fetching coffee\",\n    \"error\": {\n        \"stringValue\": \"\\\"invalid-id\\\"\",\n        \"valueType\": \"string\",\n        \"kind\": \"ObjectId\",\n        \"value\": \"invalid-id\",\n        \"path\": \"_id\",\n        \"reason\": {},\n        \"name\": \"CastError\",\n        \"message\": \"Cast to ObjectId failed for value \\\"invalid-id\\\" (type string) at path \\\"_id\\\" for model \\\"Coffee\\\"\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/{{apiVersion}}/health",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"{{apiVersion}}",
+						"health"
+					]
+				},
+				"description": "Check the health status of the API"
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n  \"status\": \"ok\",\n  \"timestamp\": \"2023-01-01T00:00:00.000Z\",\n  \"service\": \"coffee-api\",\n  \"version\": \"1.0.0\"\n}"
+				},
+				{
+					"name": "Health Check",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/{{apiVersion}}/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"{{apiVersion}}",
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "95"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5f-N2rqejAMCjfNbLNNpyaDhYCsXHg\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 12 Jun 2025 06:38:49 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"ok\",\n    \"timestamp\": \"2025-06-12T06:38:49.119Z\",\n    \"service\": \"coffee-api\",\n    \"version\": \"1.0.0\"\n}"
 				}
 			]
 		}
@@ -489,5 +1044,42 @@
 				]
 			}
 		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "apiVersion",
+			"value": "v1",
+			"type": "string"
+		},
+		{
+			"key": "defaultCoffeeName",
+			"value": "Test Coffee",
+			"type": "string"
+		},
+		{
+			"key": "defaultCoffeePrice",
+			"value": "9.99",
+			"type": "string"
+		},
+		{
+			"key": "defaultCoffeeOrigin",
+			"value": "Test Origin",
+			"type": "string"
+		},
+		{
+			"key": "defaultRoastLevel",
+			"value": "medium",
+			"type": "string"
+		},
+		{
+			"key": "mockServerUrl",
+			"value": "https://77caf86e-b950-46ef-a556-a02d041e1b38.mock.pstmn.io",
+			"type": "string"
+		}
 	]
-} 
+}

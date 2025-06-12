@@ -14,25 +14,27 @@ jobs:
       matrix:
         environment: [dev, qa]
         node-version: [18.x]
+      fail-fast: false
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
-    - name: Install Newman and Reporter
+    - name: Install Newman and HTML reporter
       run: |
-        npm install -g newman newman-reporter-htmlextra
+        npm install -g newman
+        npm install -g newman-reporter-htmlextra
 
     - name: Start API Server
       run: |
         # Add your API server startup command here
         # For example: npm start &
-        # sleep 10  # Wait for server to start
+        sleep 10  # Give the server time to start
       env:
         PORT: ${{ matrix.environment == 'dev' && '8000' || '8001' }}
 
@@ -49,8 +51,7 @@ jobs:
           --reporter-htmlextra-timezone "UTC"
 
     - name: Upload Test Reports
-      uses: actions/upload-artifact@v3
-      if: always()
+      uses: actions/upload-artifact@v4
       with:
         name: test-reports-${{ matrix.environment }}
         path: reports/
